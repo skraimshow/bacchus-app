@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bacchus Auction</title>
+</head>
+<body>
+    <h1>Bacchus Auction</h1>
+    <nav>
+        <ul>
+            <li><a href="/">All</a></li>
+            <% categories.forEach(category => { %>
+                <li><a href="/category/<%= category %>"><%= category %></a></li>
+            <% }); %>
+        </ul>
+    </nav>
+    <% if (filter) { %>
+        <p>Filtered by category: <%= filter %></p>
+    <% } %>
+    <ul>
+        <% auctions.forEach(auction => { %>
+            <li>
+                <h2><%= auction.productTitle %></h2>
+                <p><%= auction.productDescription %></p>
+                <p>Bidding ends at: <%= new Date(auction.biddingEndDate).toLocaleString() %></p>
+                <form action="/bid" method="post">
+                    <input type="hidden" name="productId" value="<%= auction.productId %>">
+                    <input type="text" name="name" placeholder="Your Name">
+                    <input type="number" name="amount" placeholder="Your Bid">
+                    <button type="submit">Place Bid</button>
+                </form>
+            </li>
+        <% }); %>
+    </ul>
+</body>
+</html>
